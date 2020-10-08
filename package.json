@@ -19,5 +19,18 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sushma0510/PersonalPortfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sushma0510/PersonalPortfolio/issues"
+  },
+  "homepage": "https://github.com/Sushma0510/PersonalPortfolio#readme",
+  "description": ""
 }
