@@ -9,7 +9,7 @@ var data=require('./data/index.json')
 var download=require('download-pdf')
 
 const port=3000
-app.listen(port)
+app.listen(process.env.PORT || 5000)
 console.log('listenig port')
 
 var createError = require('http-errors');
@@ -17,6 +17,7 @@ var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 
 const session = require('express-session');
+var MemoryStore = require('memorystore')(session)
 const flash = require('express-flash');
 var logger = require('morgan');
 
@@ -34,7 +35,10 @@ const middlewares = [
     key: '  super-secret-cookie',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 86400000,
+      store: new MemoryStore({
+        checkPeriod: 86400000
+      }), }
   }),
   flash(),
 
