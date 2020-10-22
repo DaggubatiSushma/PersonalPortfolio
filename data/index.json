@@ -1,0 +1,44 @@
+{
+        "title":"Sushma Daggubati",
+            "occupation":"WebDevloper",
+        "about":{
+            "aboutme":"I design/develop websites for small business. Previously I have worked as a software engineer for two years. Currently, I am pursuing Artifiicail Intelligence at Cenetennial,Canada.",
+            "skills":"Skills",
+            "skilldesc":"I am good at programming languages, server side scripting and some front end too.",
+            "skill1":"Java",
+            "skill2":"HTML/CSS",
+            "skill3":"Python",
+            "skill4":"Javascript",
+            "download":"Download CV"
+        },
+        "projects":{
+            "title":"Professional Experience",
+            "occupation":"Java developer",
+            "period":"2018 - Present",
+            "company":"Fedex, India",
+            "point1":"Developed an ecommerce site for Fedex users to place orders of printing documents, to manage customers, and to track the order gtns",
+            "point2":"Maintained four projects, implemented the CICD pipelines  ",
+            "point3":"Fixed many bugs and provided the optimal solutions to clients",
+            "point4":"Migrated the legacy system to new configurations as per client requirements.",
+            "project2":"A Novel Anti Phishing framework based on Visual Cryptography",
+            "point5":"Implementation of an IEEE Paper ‘‘A Novel Anti Phishing framework based on Visual Cryptography’’ and Submitted as a final year project.",
+            "point6":"This project aims at providing more security for online websites to save passwords and confidential information from phishing sites. ",
+            "point7":"It is paper related to Visual Cryptography, Image Processing and Security.",
+            "point8":"Implemented the captcha generation system, and split the parts. ",
+            "period2":"2017 - 2018"
+        },
+        
+        "services":{
+            "service1":"WebAppDevelopment",
+            "service1desc":"Creation of application programs that reside on remote servers and are delivered to the user's device over the Internet.",
+            "service2":"Mobile Apps",
+            "service2desc":"Simply an app, is a computer program or software application designed to run on a mobile device",
+            "service3":"BackEnd Development",
+            "service3desc":"It’s code that connects the web to a database, manages user connections, and powers the web application itself.",
+            "service4":"AI Developer",
+            "service4desc":"Implementing the AI functionality in software application. I am still learning this."
+        }
+        
+
+
+}

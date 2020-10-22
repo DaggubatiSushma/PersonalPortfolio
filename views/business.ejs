@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include ('partials/head') %> 
+<body>
+  
+  <%- include ('partials/header') %>
+
+      <table>
+        <tr>
+         
+          <th>Name</th>
+          <th>Age</th>
+          <th>Email</th>
+        </tr>
+    <% data.forEach(function(obj){ %>
+        <tr>
+          <td><%=obj.name%></td>
+          <td><%=obj.contact%></td>
+          <td><%=obj.email%></td>
+        </tr>
+        <%})%>
+    </table>
+ 
+</body>
+<%- include ('partials/footer') %>
+<%- include ('partials/scripts') %>
+</html>
