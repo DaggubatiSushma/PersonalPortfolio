@@ -5,32 +5,22 @@ var data=require('../data/index.json')
 var app=express();
 
 const db = require("../config/db");
+require("../config/business.model")
 const dbName = "express_auth";
 const collectionName = "business";
+const mongoose=require('mongoose')
+const Business=mongoose.model('Business');
+mongoose.set('useFindAndModify', false);
+var ObjectID = require('mongodb').ObjectID;
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('home',data);
-});
-
-
-
-router.get('/business', async (req, res) => {
-  db.initialize(dbName, collectionName, function(dbCollection) { 
-
-    dbCollection.find().toArray(function(err, result) {
-        if (err) throw err;
-          console.log(result);
-          res.render('business',{data:result});
-    });
-  
-  }, function(err) { 
-    throw (err);
-  });
 });
 
 router.get('/home', function(req, res, next) {
   res.render('home',data);
 });
+
 
 
 router.get('/about', function(req, res, next) {
@@ -54,7 +44,9 @@ router.get('/contact', (req, res) => {
     errors: {}
   });
 });
+
 const { check, validationResult, matchedData } = require('express-validator');
+const { ObjectId } = require('mongodb');
 
 router.post('/contact', [
   check('name')
@@ -89,4 +81,65 @@ router.post('/contact', [
   req.flash('success', 'Thanks for the message! I‘ll be in touch :)');
   res.redirect('/');
 });
+
+router.get('/business', function (req, res) {
+  db.initialize(dbName, collectionName, function(dbCollection) { 
+
+    dbCollection.find().sort({"name":1}).toArray(function(err, result) {
+        if (err) throw err;
+          console.log(result);
+          res.render('list',{data:result});
+    });
+  
+  }, function(err) { 
+    throw (err);
+  });
+});
+
+router.get('/:id',function (req, res) {     
+          console.log(req.params.id)
+          res.render('update',{user:req.params.id})
+          
+});
+
+router.get('/delete/:id',function (req, res) { 
+  console.log(req.params.id)
+  db.initialize(dbName, collectionName, function(dbCollection) { 
+
+    dbCollection.deleteOne(
+      { "_id": ObjectID(req.params.id)})
+      .then((obj) => {
+          console.log('Updated - ' + obj);
+          res.redirect('/business')
+      })
+      .catch((err) => {
+          console.log('Error: ' + err);
+      })
+  
+  }, function(err) { 
+    throw (err);
+  });
+});
+
+router.post('/update', function (req, res)  {
+  db.initialize(dbName, collectionName, function(dbCollection) { 
+
+    dbCollection.updateOne(
+      { "_id": ObjectID(req.body._id)}, // Filter
+      {$set: {"name": req.body.name,"contact":req.body.contact,"email":req.body.email}}
+      )
+      .then((obj) => {
+          console.log('Updated - ' + obj);
+          res.redirect('business')
+      })
+      .catch((err) => {
+          console.log('Error: ' + err);
+      })
+  
+  }, function(err) { 
+    throw (err);
+  });
+});
+
+
 module.exports = router;

@@ -438,7 +438,13 @@ section {
 .section-title p {
   margin-bottom: 0;
 }
+.business{
+  background-color:#d6e3e7;
+}
 
+.update{
+  background-color:#d6e3e7;
+}
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/

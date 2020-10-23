@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include ('partials/head') %> 
+<body>
+  
+  <%- include ('partials/header') %>
+  <section id="business" class="business ">
+    <div class="section-title">
+      <h2>Business Contacts List</h2>
+       </div>
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Contact</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(function(obj){ %>
+          <tr>
+            <td><%=obj.name%></td>
+            <td><%=obj.contact%></td>
+            <td><%=obj.email%></td>
+            <td>
+              <div type="update" class="btn btn-info">
+                <a href="/<%=obj._id%>">Update</a>
+              </div>
+            </td>
+            <td>
+              <div type="button" class="btn btn-info">
+                <a href="/delete/<%=obj._id%>">Delete</a>
+              </div>
+            </td>
+          </tr>
+          <%})%>
+      </tbody>
+    </table>
+
+  </section>
+</body>
+<%- include ('partials/footer') %>
+<%- include ('partials/scripts') %>
+</html>
