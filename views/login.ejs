@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include ('partials/head') %> 
+<body>
+    <header id="header" class="fixed-top  d-flex justify-content-center align-items-center">
+        <img src="images/logo.png"></img>
+      </header>
+
+  <section id="login" class="login">
+    <div class="section-title col-lg-6 offset-lg-3">
+        <h2>Sign In</h2>
+         </div>
+
+         <div class="data-form" >
+            <form method="POST" action="/login" class="col-lg-6 offset-lg-3">
+                <div class="form-group">
+                    <label for="name">UserName</label>
+                    <input type="name" class="form-control" id="name" name="username" placeholder="Enter UserName" required >                   
+                </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required >                  
+                  </div>               
+                  <button type="submit">Login</button>
+          </form>
+            
+          </div>   
+
+  </section>
+ 
+</body>
+<%- include ('partials/footer') %>
+<%- include ('partials/scripts') %>
+</html>

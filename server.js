@@ -45,6 +45,8 @@ const middlewares = [
 app.use(middlewares);
 
 app.use('/', routes);
+//var loginRouter = require('./routes/login');
+//app.use('/',loginRouter)
 app.get('/download', function(req, res){
   var file=path.join(__dirname,'./data/SushmaDaggubati-Resume.pdf')
   res.download(file, function (err) {

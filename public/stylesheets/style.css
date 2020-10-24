@@ -25,6 +25,7 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
 }
 
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -86,10 +87,24 @@ h1, h2, h3, h4, h5, h6 {
 #header img {
   padding: 0;
   margin: 0;
-  padding-right: 400px;
+  padding-right: 200px;
   max-height: 60px;
 }
 
+
+.login {
+  background-color:#d6e3e7;
+}
+.login button {
+  background-color:#4e8292; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/

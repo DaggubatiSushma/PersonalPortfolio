@@ -1,9 +1,12 @@
 var path=require('path')
 var express = require('express');
+var app = express();
+var session = require('express-session');
+var flag=false
 var router = express.Router();
 var data=require('../data/index.json')
 var app=express();
-
+var SALT_WORK_FACTOR=10
 const db = require("../config/db");
 require("../config/business.model")
 const dbName = "express_auth";
@@ -12,33 +15,94 @@ const mongoose=require('mongoose')
 const Business=mongoose.model('Business');
 mongoose.set('useFindAndModify', false);
 var ObjectID = require('mongodb').ObjectID;
+const usercollectionName = "users";
+
 
 router.get('/', function(req, res) {
+  res.render('login',data);
+});
+
+var bcrypt = require('bcrypt');
+var BCRYPT_SALT_ROUNDS = 12;
+router.get('/register', function (req, res, next) {
+  var password = 'test'
+
+  bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
+    .then(function(hashedPassword) {
+				db.initialize(dbName, usercollectionName, function(dbCollection) { 
+			dbCollection.insert({
+			  "username" : "test",
+			  "hash" : hashedPassword			  
+			});  
+		  }, function(err) { 
+			throw (err);
+		  });
+    })
+    .then(function() {
+        res.send();
+    })
+    .catch(function(error){
+        console.log("Error saving user: ");
+        console.log(error);
+        next();
+    });
+});
+
+router.post('/login',function(req, res) {
+  console.log(req.body.username)
+  db.initialize(dbName, usercollectionName, function(dbCollection) { 
+    dbCollection.find({username:req.body.username}).toArray(function(err, result) {
+        if (err) throw err;   
+          console.log(result[0].username)
+          user=result[0]
+          if (user && bcrypt.compareSync(req.body.password, user.hash)) {
+            console.log(true)
+            flag=true
+            res.redirect('home')
+        }else{
+          console.log(false)
+          res.redirect('/')
+        }
+    });
+  
+  }, function(err) { 
+    throw (err);
+  });
+});
+
+function checkSignIn(req, res,next){
+  if(flag==true){
+    next();
+  }
+  else{
+    res.redirect('/')
+  }
+}
+
+router.get('/logout',checkSignIn,function (req, res)  {
+  flag=false;
+  res.redirect('/')
+});
+
+router.get('/home',checkSignIn, function(req, res) {
   res.render('home',data);
 });
 
-router.get('/home', function(req, res, next) {
-  res.render('home',data);
-});
-
-
-
-router.get('/about', function(req, res, next) {
+router.get('/about', checkSignIn,function(req, res, next) {
   res.render('about',data);
 });
 
-
-
-router.get('/services', function(req, res, next) {
+router.get('/services', checkSignIn,function(req, res, next) {
   res.render('services',data);
 });
 
-router.get('/projects', function(req, res, next) {
+router.get('/projects', checkSignIn,function(req, res, next) {
   res.render('projects',data);
 });
 
 
-router.get('/contact', (req, res) => {
+
+router.get('/contact',checkSignIn, (req, res) => {
   res.render('contact', {
     data: {},
     errors: {}
@@ -46,9 +110,8 @@ router.get('/contact', (req, res) => {
 });
 
 const { check, validationResult, matchedData } = require('express-validator');
-const { ObjectId } = require('mongodb');
 
-router.post('/contact', [
+router.post('/contact', checkSignIn,[
   check('name')
     .isLength({ min: 1 })
     .withMessage('Please Enter atleaset four chars')
@@ -82,7 +145,7 @@ router.post('/contact', [
   res.redirect('/');
 });
 
-router.get('/business', function (req, res) {
+router.get('/business', checkSignIn,function (req, res) {
   db.initialize(dbName, collectionName, function(dbCollection) { 
 
     dbCollection.find().sort({"name":1}).toArray(function(err, result) {
@@ -96,13 +159,13 @@ router.get('/business', function (req, res) {
   });
 });
 
-router.get('/:id',function (req, res) {     
+router.get('/:id',checkSignIn,function (req, res) {     
           console.log(req.params.id)
           res.render('update',{user:req.params.id})
           
 });
 
-router.get('/delete/:id',function (req, res) { 
+router.get('/delete/:id',checkSignIn,function (req, res) { 
   console.log(req.params.id)
   db.initialize(dbName, collectionName, function(dbCollection) { 
 
@@ -121,7 +184,7 @@ router.get('/delete/:id',function (req, res) {
   });
 });
 
-router.post('/update', function (req, res)  {
+router.post('/update', checkSignIn,function (req, res)  {
   db.initialize(dbName, collectionName, function(dbCollection) { 
 
     dbCollection.updateOne(
@@ -140,6 +203,7 @@ router.post('/update', function (req, res)  {
     throw (err);
   });
 });
+
 
 
 module.exports = router;
